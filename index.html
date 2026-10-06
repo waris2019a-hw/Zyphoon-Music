@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zyhoon Music — เล่นเพลง YouTube</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+            <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">Zyhoon Music</div>
+          <div class="brand-sub">YouTube Playlist Player</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <button class="nav-item active" data-view="home">
+          <span class="nav-icon">🏠</span><span>หน้าแรก</span>
+        </button>
+        <button class="nav-item" data-view="search">
+          <span class="nav-icon">🔍</span><span>ค้นหาเพลง</span>
+        </button>
+        <button class="nav-item" data-view="import">
+          <span class="nav-icon">📥</span><span>นำเข้า Playlist</span>
+        </button>
+        <button class="nav-item" data-view="library">
+          <span class="nav-icon">📚</span><span>คลังเพลงของฉัน</span>
+        </button>
+        <button class="nav-item" data-view="liked">
+          <span class="nav-icon">❤️</span><span>เพลงที่ชอบ</span>
+        </button>
+        <button class="nav-item" data-view="recent">
+          <span class="nav-icon">🕘</span><span>เล่นล่าสุด</span>
+        </button>
+        <button class="nav-item" data-view="settings">
+          <span class="nav-icon">⚙️</span><span>ตั้งค่า</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-playlists" id="sidebar-playlists">
+        <div class="sidebar-section-title">
+          <span>เพลย์ลิสต์ของฉัน</span>
+          <button id="btn-new-playlist" class="icon-btn" title="สร้างเพลย์ลิสต์ใหม่">＋</button>
+        </div>
+        <div id="playlist-list" class="playlist-list"></div>
+      </div>
+    </aside>
+
+    <main id="main" class="main">
+      <header class="main-header">
+        <button id="btn-menu" class="icon-btn menu-btn" title="เมนู">☰</button>
+        <div class="header-search">
+          <input id="global-search" type="search" placeholder="ค้นหาเพลง, คลิป, เพลย์ลิสต์..." autocomplete="off" />
+        </div>
+      </header>
+
+      <div id="view-root" class="view-root">
+        <!-- views render here -->
+      </div>
+    </main>
+
+    <footer id="player-bar" class="player-bar">
+      <div id="video-panel" class="video-panel hidden">
+        <div class="video-panel-header">
+          <span>กำลังเล่น</span>
+          <button id="btn-toggle-video" class="icon-btn" title="ย่อ/ขยาย">–</button>
+        </div>
+        <div id="yt-player-container" class="yt-player-container">
+          <div id="yt-player"></div>
+        </div>
+      </div>
+
+      <div class="player-bar-inner">
+        <div class="now-playing">
+          <img id="np-thumb" class="np-thumb" alt="" src="" />
+          <div class="np-meta">
+            <div id="np-title" class="np-title">ยังไม่ได้เล่นเพลง</div>
+            <div id="np-artist" class="np-artist">—</div>
+          </div>
+          <button id="btn-like" class="icon-btn like-btn" title="ถูกใจ">♡</button>
+        </div>
+
+        <div class="player-controls">
+          <div class="control-buttons">
+            <button id="btn-shuffle" class="icon-btn ctrl" title="สุ่ม">🔀</button>
+            <button id="btn-prev" class="icon-btn ctrl" title="ก่อนหน้า">⏮</button>
+            <button id="btn-play" class="icon-btn ctrl play-btn" title="เล่น/หยุด">▶</button>
+            <button id="btn-next" class="icon-btn ctrl" title="ถัดไป">⏭</button>
+            <button id="btn-repeat" class="icon-btn ctrl" title="ทำซ้ำ">🔁</button>
+          </div>
+          <div class="progress-row">
+            <span id="time-current" class="time">0:00</span>
+            <div id="seek-bar" class="seek-bar" role="slider" aria-label="ความคืบหน้า">
+              <div class="seek-track">
+                <div id="seek-fill" class="seek-fill"></div>
+                <div id="seek-thumb" class="seek-thumb"></div>
+              </div>
+            </div>
+            <span id="time-total" class="time">0:00</span>
+          </div>
+        </div>
+
+        <div class="player-extra">
+          <button id="btn-show-video" class="icon-btn" title="แสดงวิดีโอ">📺</button>
+          <div class="volume-wrap">
+            <button id="btn-mute" class="icon-btn" title="เสียง">🔊</button>
+            <div id="volume-bar" class="volume-bar" role="slider" aria-label="ระดับเสียง">
+              <div class="volume-track">
+                <div id="volume-fill" class="volume-fill"></div>
+                <div id="volume-thumb" class="volume-thumb"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="toast-root" class="toast-root"></div>
+  <div id="modal-root" class="modal-root hidden"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
